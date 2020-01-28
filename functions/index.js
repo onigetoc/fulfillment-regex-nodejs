@@ -27,7 +27,10 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
   function validateEmployeeID (agent) {
     // get the employee ID parameter from the request header received from Dialogflow
-    let employeeID = agent.parameters.employeeID;
+    var employeeID = agent.parameters.employeeID;
+    //employeeID = agent.parameters.employeeID.replace(/\s+/g, '');
+    //employeeID = employeeID.replace(/\s+/g, '');
+    let employeeID = employeeID.replace(/[^a-zA-Z0-9]+/ig, "");
     let pattern = /[^a-zA-Z0-9]/;
     if (employeeID.length !== 6) {
       agent.add(`The length of the Employee ID should be six characters. Please enter the correct ID.`);
